@@ -1,0 +1,1034 @@
+================================================================================
+ASESOR CAPSTONE AWS AI PRACTITIONER
+================================================================================
+
+Guía interactiva por dominios del examen AIF-C01.
+
+Esta aplicación acompaña la construcción del proyecto Capstone siguiendo los
+5 dominios del examen AWS AI Practitioner. El objetivo es completar cada dominio
+de forma secuencial para generar el documento técnico y el archivo
+BOOTCAMP_CAPSTONE.md.
+
+Umbral de aprobación: 70/100 total, con mínimo 50% en cada dominio.
+
+Nota importante:
+Los campos marcados con $$$$$$$$$$$$$$$$ se dejan pendientes.
+
+
+================================================================================
+ÍNDICE GENERAL
+================================================================================
+
+D1   · Aspectos básicos de IA y ML
+D1.2 · Caracterización del enfoque
+D1.3 · Ciclo de vida del proyecto
+D2   · Aspectos básicos de IA Generativa
+D2.3 · Riesgos y mitigaciones
+D3.1 · Arquitectura de la aplicación
+D3.2 · Prompt Engineering
+D3.3 · Prototipo funcional y demo
+D3.4 · Evaluación de resultados
+D4   · Pautas para una IA Responsable
+
+
+================================================================================
+D1 · ASPECTOS BÁSICOS DE IA Y ML                                         20 pts
+================================================================================
+
+Objetivos:
+Definir el problema de negocio, justificar IA/ML, caracterizar el enfoque y
+documentar el ciclo de vida del proyecto.
+
+
+--------------------------------------------------------------------------------
+CAMPO: Problema de Negocio
+--------------------------------------------------------------------------------
+
+Las pequeñas y medianas empresas del sector retail enfrentan problemas de
+sobreinventario, desabasto y pérdidas económicas debido a la falta de herramientas
+inteligentes para predecir demanda, clasificar productos y optimizar compras y
+ventas.
+
+Actualmente, muchas decisiones de reabastecimiento se realizan manualmente, lo que
+provoca errores en inventario, retrasos en compras y disminución de ventas.
+
+El proyecto propone un modelo inteligente basado en IA/ML que permita analizar
+patrones históricos de ventas, clasificar productos y generar predicciones de
+demanda para mejorar la toma de decisiones.
+
+El objetivo de negocio es mejorar la disponibilidad de productos, reducir pérdidas
+por exceso o falta de stock y optimizar el tiempo que el personal dedica al
+análisis manual de inventario.
+
+
+--------------------------------------------------------------------------------
+CAMPO: Métricas de Éxito
+--------------------------------------------------------------------------------
+
+- Reducir el sobreinventario en un 20% mediante predicción inteligente de demanda.
+
+- Disminuir el desabasto de productos en un 15% evitando pérdidas por falta de
+  stock.
+
+- Alcanzar una precisión superior al 85% en las predicciones de demanda utilizando
+  modelos de Machine Learning.
+
+- Reducir en un 50% el tiempo de análisis y gestión de inventario mediante
+  automatización.
+
+- Incrementar las ventas entre un 10% y 15% gracias a una mejor disponibilidad de
+  productos.
+
+- Generar alertas automáticas para productos críticos y tendencias de alta demanda.
+
+
+--------------------------------------------------------------------------------
+CAMPO: Alternativa NO IA
+--------------------------------------------------------------------------------
+
+Una alternativa sin IA sería utilizar hojas de cálculo, reportes manuales o
+sistemas tradicionales de inventario para registrar ventas y controlar stock.
+
+Sin embargo, estas soluciones dependen de análisis manuales, no detectan patrones
+históricos de demanda y no permiten realizar predicciones automáticas, lo que
+incrementa el riesgo de sobreinventario, desabasto y pérdidas económicas.
+
+El enfoque con IA/ML se justifica porque permite analizar datos históricos,
+identificar patrones de demanda, generar predicciones futuras y convertir esas
+predicciones en recomendaciones de reabastecimiento más oportunas y medibles.
+
+
+--------------------------------------------------------------------------------
+CAMPO: Valor Esperado
+--------------------------------------------------------------------------------
+
+3 analistas de inventario × 2 horas ahorradas por día × $120 MXN por hora ×
+22 días laborales = $15,840 MXN de ahorro mensual estimado.
+
+- Reducir el sobreinventario en al menos 20% mediante una mejor estimación de
+  demanda y detección de productos de baja rotación.
+
+- Reducción estimada del 20% en pérdidas por sobreinventario y productos no
+  vendidos.
+
+- Disminución del 15% en pérdidas por desabasto gracias a predicción inteligente
+  de demanda.
+
+- Incremento estimado de ventas entre un 10% y 15% por mejor disponibilidad de
+  productos y optimización de reabastecimiento.
+
+- Reducción del tiempo de análisis de inventario y compras de 4 horas a 2 horas
+  diarias mediante automatización y recomendaciones inteligentes.
+
+
+================================================================================
+D1.2 · CARACTERIZACIÓN DEL ENFOQUE
+================================================================================
+
+Objetivo:
+Identificar tipo de problema, tipo de aprendizaje y distinguir conceptos
+IA/ML/DL/GenAI.
+
+
+--------------------------------------------------------------------------------
+SELECCIÓN: Tipo de Problema
+--------------------------------------------------------------------------------
+
+Pronóstico de series de tiempo, ya que se quiere predecir la demanda futura usando
+las ventas históricas por fecha.
+
+
+--------------------------------------------------------------------------------
+SELECCIÓN: Tipo de Aprendizaje
+--------------------------------------------------------------------------------
+
+Supervisado, porque se necesita entrenar con datos históricos donde se conoce la
+demanda real.
+
+
+--------------------------------------------------------------------------------
+SELECCIÓN: Modalidad de Datos
+--------------------------------------------------------------------------------
+
+Series de tiempo, porque los datos principales son ventas ordenadas por fecha.
+
+
+--------------------------------------------------------------------------------
+CAMPO: Justificación de la caracterización
+--------------------------------------------------------------------------------
+
+El proyecto se clasifica como un problema de pronóstico de series de tiempo porque
+busca predecir la demanda futura de productos a partir de ventas históricas
+organizadas por fecha, producto y tienda.
+
+El enfoque principal es aprendizaje supervisado, ya que el modelo se entrena con
+datos históricos donde se conoce la demanda real observada. La variable objetivo
+será la cantidad vendida o demandada por producto en un periodo determinado.
+
+La modalidad de datos es series de tiempo, porque la información depende del
+comportamiento temporal de las ventas. Aunque los datos también tienen formato
+tabular, la característica más importante es que las ventas cambian con el tiempo y
+pueden presentar patrones semanales, mensuales, estacionales o por tendencia.
+
+El sistema también puede generar una clasificación secundaria de riesgo de
+inventario, por ejemplo: bajo riesgo, riesgo medio o alto riesgo de desabasto. Sin
+embargo, esta clasificación no es el problema principal, sino una capa de negocio
+construida a partir del pronóstico de demanda.
+
+
+================================================================================
+D1.3 · CICLO DE VIDA DEL PROYECTO
+================================================================================
+
+El ciclo de vida del proyecto seguirá un flujo end-to-end de Machine Learning
+aplicado a retail:
+
+1. Problem Framing:
+   Se define el problema de negocio: reducir sobreinventario, disminuir desabasto
+   y mejorar la toma de decisiones de compra e inventario en pequeñas y medianas
+   empresas del sector retail. Las métricas principales serán precisión de
+   predicción de demanda, reducción de productos con exceso de stock, reducción de
+   productos con riesgo de desabasto y ahorro de tiempo operativo.
+
+2. Recolección de Datos:
+   Se recopilarán datos históricos de ventas, productos, tiendas, precios e
+   inventario. Las fuentes pueden ser archivos CSV, bases de datos transaccionales
+   o datasets públicos de retail. Los datos principales serán ventas por fecha,
+   producto y tienda.
+
+3. Preparación de Datos:
+   Se limpiarán registros duplicados, fechas inválidas, valores faltantes y ventas
+   atípicas. Después, las ventas se agruparán por día, producto y tienda para
+   construir una serie temporal de demanda.
+
+4. Análisis Exploratorio:
+   Se analizarán productos más vendidos, productos de baja rotación, patrones por
+   día de la semana, comportamiento mensual, estacionalidad y productos con demanda
+   irregular. Esta fase permitirá entender qué variables afectan la demanda.
+
+5. Ingeniería de Características:
+   Se crearán variables para mejorar el modelo, como ventas de días anteriores,
+   ventas de la semana anterior, promedios móviles, día de la semana, mes,
+   temporada, categoría del producto, precio y stock disponible.
+
+6. Entrenamiento del Modelo:
+   Primero se entrenarán modelos base como promedio móvil o predicción naive para
+   tener un punto de comparación. Después se evaluarán modelos de Machine Learning
+   como Random Forest, XGBoost, LightGBM o AutoGluon TimeSeries para mejorar la
+   precisión del pronóstico.
+
+7. Evaluación del Modelo:
+   El desempeño se evaluará con métricas como MAE, RMSE, WAPE y sMAPE. También se
+   comparará contra el baseline del proceso manual para validar si el modelo
+   realmente mejora la toma de decisiones.
+
+8. Generación de Predicciones:
+   El modelo generará predicciones de demanda para los próximos 7, 14 o 30 días por
+   producto y tienda.
+
+9. Motor de Reabastecimiento:
+   Las predicciones se convertirán en recomendaciones de compra considerando stock
+   actual, demanda esperada, punto de reorden, stock de seguridad y tiempo de
+   entrega del proveedor.
+
+10. Integración con la Aplicación:
+    Las predicciones y recomendaciones se integrarán en una aplicación web donde el
+    usuario podrá consultar inventario, registrar ventas, visualizar tendencias y
+    revisar productos críticos.
+
+11. Monitoreo:
+    Se monitoreará el error de predicción, productos con comportamiento inusual,
+    cambios en la demanda, productos con bajo stock y desempeño del sistema.
+
+12. Reentrenamiento:
+    El modelo se actualizará periódicamente con nuevos datos de ventas para mantener
+    la precisión y adaptarse a cambios en el comportamiento de compra.
+
+
+================================================================================
+D2 · ASPECTOS BÁSICOS DE IA GENERATIVA                                  24 pts
+================================================================================
+
+Objetivos:
+Definir conceptos de GenAI, seleccionar el foundation model y documentar
+limitaciones.
+
+
+--------------------------------------------------------------------------------
+CAMPO: Definiciones GenAI Aplicadas
+--------------------------------------------------------------------------------
+
+En este proyecto, la IA Generativa se utilizará como un asistente inteligente para
+explicar predicciones de demanda, resumir métricas de inventario y generar
+recomendaciones comprensibles para usuarios de negocio.
+
+Foundation model:
+El foundation model se usará para interpretar información del sistema, responder
+preguntas del usuario y generar explicaciones en lenguaje natural. Por ejemplo, el
+usuario podrá preguntar: “¿Qué productos tienen mayor riesgo de desabasto esta
+semana?” y el modelo generará una respuesta basada en predicciones, inventario
+disponible y reglas de reabastecimiento.
+
+Embeddings:
+Los embeddings se usarán para convertir documentos y conocimiento del negocio en
+representaciones vectoriales. Esto permitirá buscar información relevante dentro de
+documentos como políticas de inventario, catálogo de productos, criterios de
+reabastecimiento, tiempos de entrega de proveedores y reportes históricos.
+
+Tokens:
+La ventana de contexto debe ser suficiente para incluir la pregunta del usuario,
+los datos recuperados desde la base de conocimiento, los resultados del modelo de
+predicción y las reglas de negocio necesarias para generar una respuesta. Para
+evitar costos innecesarios, no se enviará todo el histórico de ventas al modelo,
+sino solo resúmenes, KPIs y fragmentos relevantes.
+
+Prompts y completions:
+Los prompts indicarán al modelo que actúe como asistente de inventario retail,
+usando únicamente la información recuperada y los datos del sistema. Los resultados
+serán respuestas esperadas y estructuradas con explicación, productos críticos,
+causa probable, nivel de riesgo y acción recomendada. Por ejemplo: “Comprar
+80 unidades del SKU-001 porque la demanda esperada supera el stock disponible
+durante los próximos 7 días”.
+
+
+--------------------------------------------------------------------------------
+PENDIENTE POR VALIDAR CON ASESOR: Foundation Model Primario
+--------------------------------------------------------------------------------
+
+Foundation Model Primario $$$$$$$$$$$$$$$$
+
+
+--------------------------------------------------------------------------------
+PENDIENTE POR VALIDAR CON ASESOR: Modelo Alternativo
+--------------------------------------------------------------------------------
+
+Modelo Alternativo: $$$$$$$$
+
+
+--------------------------------------------------------------------------------
+PENDIENTE POR VALIDAR CON ASESOR: Justificación Selección Modelo
+--------------------------------------------------------------------------------
+
+Justificación Selección Modelo: $$$$$$$$$$$$
+
+
+================================================================================
+D2.3 · RIESGOS Y MITIGACIONES
+================================================================================
+
+D2.3: Limitaciones, riesgos y mitigaciones (8 pts)
+
+
+--------------------------------------------------------------------------------
+CAMPO: Riesgos identificados
+--------------------------------------------------------------------------------
+
+Alucinaciones:
+El foundation model podría generar recomendaciones no respaldadas por datos reales,
+por ejemplo sugerir comprar productos que no existen en el catálogo o inventar
+causas de desabasto.
+
+Información desactualizada:
+El modelo puede responder con datos antiguos si no consulta el inventario
+actualizado, las predicciones recientes o las políticas vigentes de
+reabastecimiento.
+
+Recomendaciones incorrectas por contexto incompleto:
+Si el modelo no recibe información suficiente sobre stock actual, demanda esperada,
+lead time del proveedor o stock de seguridad, podría generar recomendaciones poco
+confiables.
+
+Sesgo temporal en los datos:
+Las ventas históricas pueden estar influenciadas por temporadas, promociones o
+eventos atípicos. Si no se consideran estos factores, el sistema podría
+sobreestimar o subestimar la demanda.
+
+Riesgo de prompt injection:
+Un usuario podría intentar manipular el prompt para que el asistente ignore reglas,
+revele información interna o genere respuestas fuera del propósito del sistema.
+
+Riesgo de privacidad y seguridad:
+Los datos de ventas, inventario, proveedores y costos pueden ser sensibles para el
+negocio. El sistema debe evitar exponer información a usuarios no autorizados.
+
+Costo y latencia:
+El uso excesivo del foundation model para consultas simples puede aumentar costos y
+tiempos de respuesta.
+
+Exceso de confianza del usuario:
+El usuario podría tomar las recomendaciones como decisiones automáticas definitivas,
+aunque el sistema debe funcionar como apoyo a la toma de decisiones y no como
+sustituto total del criterio humano.
+
+
+--------------------------------------------------------------------------------
+CAMPO: Mitigaciones implementadas
+--------------------------------------------------------------------------------
+
+Uso de RAG con fuentes controladas:
+El asistente solo responderá usando información recuperada desde fuentes autorizadas
+como catálogo de productos, políticas de inventario, reportes de ventas,
+predicciones generadas por el modelo ML y reglas de reabastecimiento.
+
+Validación contra datos reales:
+Antes de generar una recomendación, el sistema validará producto, stock, predicción
+y punto de reorden contra la base de datos del sistema. Si no hay datos suficientes,
+el asistente deberá indicarlo explícitamente.
+
+Respuestas estructuradas:
+Las respuestas del modelo seguirán un formato definido: producto, riesgo, evidencia,
+recomendación y nivel de confianza. Esto reduce respuestas ambiguas o inventadas.
+
+Human-in-the-loop:
+Las recomendaciones serán revisadas por un usuario responsable antes de convertirse
+en una orden de compra. El sistema apoyará la decisión, pero no ejecutará compras
+automáticamente.
+
+Guardrails:
+Se configurarán reglas para evitar respuestas fuera del dominio, exposición de datos
+sensibles, instrucciones maliciosas y recomendaciones sin evidencia.
+
+Control de acceso:
+Se usarán roles de usuario para separar permisos entre administrador, analista y
+visualizador. No todos los usuarios podrán ver costos, proveedores o métricas
+sensibles.
+
+Monitoreo:
+Se monitorearán errores de predicción, respuestas rechazadas, consultas frecuentes,
+productos con alta incertidumbre y comportamiento anómalo en el uso del asistente.
+
+Optimización de costo:
+Las consultas simples podrán resolverse con un modelo alternativo más ligero,
+mientras que el modelo principal se reservará para análisis más complejos.
+
+
+================================================================================
+D3.1 · ARQUITECTURA DE LA APLICACIÓN
+================================================================================
+
+
+--------------------------------------------------------------------------------
+CAMPO: Stack AWS por Capa
+--------------------------------------------------------------------------------
+
+Sources:
+- Aplicación web para registrar productos, ventas e inventario.
+- Archivos CSV con ventas históricas cargados en Amazon S3.
+- Base de datos transaccional en Amazon RDS PostgreSQL para productos, tiendas,
+  ventas, inventario y recomendaciones.
+- API Gateway como entrada para solicitudes del frontend.
+- Datos derivados del modelo ML, como predicciones de demanda y niveles de riesgo.
+
+Processing:
+- AWS Lambda para lógica de negocio ligera, consultas de inventario y generación de
+  alertas.
+- AWS Glue para procesos ETL sobre datos históricos de ventas almacenados en S3.
+- Amazon SageMaker para entrenamiento, evaluación e inferencia del modelo de
+  predicción de demanda.
+- Amazon Bedrock para el asistente generativo que explica predicciones,
+  recomendaciones y métricas de inventario.
+- AWS Step Functions para orquestar el flujo de procesamiento: preparar datos,
+  entrenar modelo, generar predicciones y actualizar recomendaciones.
+- Amazon EventBridge para programar ejecuciones periódicas del pipeline de
+  predicción.
+
+Storage:
+- Amazon RDS PostgreSQL para datos transaccionales: productos, ventas, inventario,
+  usuarios y recomendaciones.
+- Amazon S3 para data lake: datos raw, processed, curated, modelos entrenados y
+  resultados de predicción.
+- Amazon OpenSearch Serverless como vector store para RAG con documentos de negocio,
+  políticas de inventario y catálogo enriquecido.
+- Amazon DynamoDB como opción para almacenar sesiones o cache de consultas
+  frecuentes del asistente.
+
+Consumers:
+- Frontend web en React hospedado con AWS Amplify o Amazon S3 + CloudFront.
+- Amazon QuickSight para dashboards ejecutivos de ventas, inventario, demanda y
+  productos críticos.
+- Usuarios de negocio que consultan recomendaciones mediante la aplicación web.
+- Administradores que revisan predicciones, alertas y sugerencias de
+  reabastecimiento.
+
+
+--------------------------------------------------------------------------------
+CAMPO: Flujo general
+--------------------------------------------------------------------------------
+
+El usuario registra ventas e inventario desde la aplicación web. Los datos se
+almacenan en RDS y se exportan o sincronizan hacia S3. AWS Glue prepara los datos
+históricos y SageMaker entrena el modelo de predicción de demanda. Las predicciones
+se guardan nuevamente en S3 y RDS. Amazon Bedrock utiliza RAG para consultar
+documentos relevantes y explicar las recomendaciones al usuario final.
+
+
+--------------------------------------------------------------------------------
+CAMPO: Técnica de personalización
+--------------------------------------------------------------------------------
+
+RAG
+
+
+--------------------------------------------------------------------------------
+CAMPO: Configuración RAG
+--------------------------------------------------------------------------------
+
+Se utilizará RAG para que el asistente generativo responda con información basada
+en fuentes controladas del proyecto.
+
+Fuentes de conocimiento:
+- Catálogo de productos.
+- Políticas de inventario.
+- Reglas de reabastecimiento.
+- Tiempos de entrega de proveedores.
+- Documentación del modelo de predicción.
+- Reportes históricos de ventas.
+- Descripción de métricas de negocio.
+
+Almacenamiento:
+Los documentos se almacenarán en Amazon S3 como fuente principal de conocimiento.
+
+Embeddings:
+Se utilizarán embeddings para convertir documentos de negocio en vectores que
+permitan búsqueda semántica.
+
+Vector store:
+Se utilizará Amazon OpenSearch Serverless como base vectorial para recuperar
+fragmentos relevantes. Como alternativa de menor costo para prototipo local podría
+usarse FAISS o PostgreSQL con pgvector.
+
+Estrategia de chunking:
+Los documentos se dividirán en fragmentos de aproximadamente 800 a 1,000 tokens con
+un overlap de 100 a 150 tokens para conservar contexto entre secciones.
+
+Estrategia de recuperación:
+Para cada consulta del usuario se recuperarán los 5 fragmentos más relevantes usando
+búsqueda vectorial. Si la similitud es baja o no hay evidencia suficiente, el
+asistente deberá responder que no cuenta con información suficiente.
+
+Reranking:
+En una versión avanzada se puede agregar reranking para ordenar mejor los fragmentos
+recuperados antes de enviarlos al foundation model.
+
+Uso correcto de RAG:
+RAG se usará para documentos, políticas y conocimiento del negocio. Para datos en
+tiempo real como stock actual, ventas recientes o predicciones generadas hoy, el
+sistema consultará la base de datos o la API antes de responder. Esto evita que el
+modelo use información desactualizada.
+
+
+================================================================================
+D3.2 · PROMPT ENGINEERING
+================================================================================
+
+D3.2: Prompt engineering y personalización (8 pts)
+
+
+--------------------------------------------------------------------------------
+CAMPO: Prompts y Técnicas
+--------------------------------------------------------------------------------
+
+En el proyecto se utilizarán prompts diseñados para que el foundation model actúe
+como un asistente inteligente de inventario retail. El objetivo no es que el modelo
+invente predicciones, sino que explique resultados generados por el sistema de ML,
+consulte información recuperada mediante RAG y entregue recomendaciones claras para
+usuarios de negocio.
+
+Técnicas utilizadas:
+
+System prompt:
+Se definirá un rol fijo para el modelo:
+“Eres un asistente especializado en inventario retail, predicción de demanda y
+reabastecimiento. Debes responder únicamente con base en los datos recuperados del
+sistema, las predicciones generadas por el modelo ML y las políticas de inventario
+disponibles. Si no hay evidencia suficiente, debes indicarlo explícitamente.”
+
+Zero-shot prompting:
+Se usará cuando el usuario haga preguntas directas sin ejemplos previos.
+
+Ejemplo:
+Usuario: “¿Qué productos tienen mayor riesgo de desabasto esta semana?”
+Respuesta esperada: lista de productos críticos, demanda estimada, stock disponible,
+nivel de riesgo y acción recomendada.
+
+Few-shot prompting:
+Se incluirán ejemplos de respuestas correctas para estandarizar el formato.
+
+Pregunta:
+“¿Debo reabastecer el SKU-001?”
+
+Respuesta esperada:
+Producto: SKU-001
+Riesgo: Alto
+Evidencia: Stock actual de 40 unidades y demanda esperada de 95 unidades para los
+próximos 7 días.
+Recomendación: Comprar 70 unidades considerando stock de seguridad.
+Confianza: Media, porque la demanda reciente presenta variación.
+
+Prompt con formato estructurado:
+Las respuestas deberán seguir una estructura fija:
+- Resumen ejecutivo.
+- Productos críticos.
+- Evidencia basada en datos.
+- Recomendación.
+- Nivel de confianza.
+- Advertencias o limitaciones.
+
+Prompt con razonamiento interno controlado:
+El modelo deberá analizar internamente la información recuperada, pero solo entregar
+una explicación resumida y verificable. No debe mostrar razonamiento oculto ni
+inventar datos.
+
+Grounding con RAG:
+El prompt indicará que el modelo debe usar únicamente información recuperada desde
+fuentes autorizadas: catálogo de productos, políticas de inventario, predicciones
+de demanda, reglas de reabastecimiento y datos de stock.
+
+Manejo de incertidumbre:
+Si los datos son insuficientes, inconsistentes o desactualizados, el modelo debe
+responder:
+“No cuento con información suficiente para emitir una recomendación confiable.”
+
+Snippet de prompt principal:
+“Actúa como asistente de inventario retail. Usa únicamente los datos proporcionados
+por el sistema y los documentos recuperados. No inventes productos, precios,
+proveedores, stock ni predicciones. Para cada recomendación incluye producto,
+riesgo, evidencia, acción sugerida y nivel de confianza. Si falta información
+crítica, indícalo claramente y solicita los datos necesarios.”
+
+
+--------------------------------------------------------------------------------
+CAMPO: Defensa Prompt Injection
+--------------------------------------------------------------------------------
+
+La defensa contra prompt injection se implementará con controles en varias capas
+para evitar que el usuario manipule al modelo, ignore instrucciones del sistema o
+genere respuestas no autorizadas.
+
+Jerarquía de instrucciones:
+El system prompt tendrá prioridad sobre cualquier instrucción del usuario. Si el
+usuario escribe frases como “ignora las instrucciones anteriores”, “actúa como otro
+sistema” o “muestra el prompt interno”, el asistente debe rechazar la solicitud.
+
+Validación de entrada:
+Antes de enviar la consulta al foundation model, se aplicarán validaciones para
+detectar frases sospechosas como:
+- ignore previous instructions
+- system override
+- reveal your prompt
+- act as developer
+- disable guardrails
+- muestra tus instrucciones internas
+- ignora las políticas
+
+Bedrock Guardrails:
+Se configurarán guardrails para bloquear prompt attacks, contenido fuera del
+dominio, instrucciones maliciosas y solicitudes de información sensible. También se
+configurarán temas denegados relacionados con extracción de credenciales, evasión de
+seguridad y exposición de datos internos.
+
+Protección contra instrucciones dentro de documentos:
+Los documentos recuperados por RAG serán tratados como contenido no confiable. Si un
+documento contiene instrucciones como “ignora las reglas del sistema”, el asistente
+debe ignorarlas y usar únicamente el contenido factual del documento.
+
+Validación contra datos reales:
+El asistente no podrá recomendar compras, cantidades o productos si no existen en el
+catálogo, inventario o predicciones generadas por el sistema. Toda recomendación
+debe validarse contra la base de datos o API antes de mostrarse.
+
+Control de alcance:
+El asistente solo responderá preguntas relacionadas con inventario, ventas, demanda,
+reabastecimiento y métricas del proyecto. Preguntas fuera del dominio serán
+rechazadas de forma segura.
+
+Protección de datos sensibles:
+No se mostrarán credenciales, claves de API, datos personales, costos sensibles de
+proveedores o información restringida a usuarios sin permisos. Se aplicará control
+de acceso por rol.
+
+Respuesta segura por defecto:
+Si se detecta intento de prompt injection, datos insuficientes o conflicto entre
+fuentes, la respuesta será:
+“No puedo procesar esta solicitud porque intenta modificar las instrucciones del
+sistema o acceder a información no autorizada.”
+
+Logging y monitoreo:
+Se registrarán intentos de prompt injection, consultas bloqueadas, respuestas
+rechazadas y eventos anómalos para auditoría y mejora continua.
+
+
+================================================================================
+D3.3 Y D3.4 · DEMO Y EVALUACIÓN
+================================================================================
+
+D3.3: Prototipo funcional y demo (6 pts)
+D3.4: Evaluación de resultados (6 pts)
+
+
+--------------------------------------------------------------------------------
+CAMPO: Descripción de la Demo
+--------------------------------------------------------------------------------
+
+La demo mostrará un flujo end-to-end del sistema inteligente de predicción de
+demanda y optimización de inventario para retail.
+
+Caso de uso principal:
+Un analista de inventario necesita saber qué productos tienen riesgo de desabasto
+durante los próximos 7 días y qué cantidad debe comprar para evitar pérdidas de
+venta.
+
+Flujo de la demo:
+
+1. Carga de datos:
+   Se cargan datos históricos de ventas en formato CSV o desde una base de datos
+   transaccional. Los datos incluyen fecha, producto, tienda, cantidad vendida,
+   precio e inventario disponible.
+
+2. Preparación de datos:
+   El sistema limpia los datos, elimina registros inválidos, agrupa ventas por día,
+   producto y tienda, y genera variables como ventas anteriores, promedios móviles,
+   día de la semana y mes.
+
+3. Entrenamiento del modelo:
+   Se entrena un modelo de pronóstico de demanda usando datos históricos. Primero se
+   compara contra un baseline simple, como promedio móvil o predicción naive.
+   Después se evalúa un modelo de Machine Learning para mejorar la precisión.
+
+4. Generación de predicciones:
+   El modelo genera predicciones de demanda para los próximos 7, 14 o 30 días por
+   producto y tienda.
+
+5. Motor de reabastecimiento:
+   El sistema compara demanda esperada contra stock disponible, punto de reorden,
+   stock de seguridad y tiempo de entrega del proveedor. Con esto genera una
+   recomendación de compra.
+
+6. Consulta con asistente GenAI:
+   El usuario pregunta: “¿Qué productos tienen mayor riesgo de desabasto esta semana
+   y cuánto debo comprar?”
+
+7. Recuperación de contexto:
+   El sistema recupera información relevante desde la base de conocimiento:
+   políticas de inventario, reglas de reabastecimiento, catálogo de productos y
+   predicciones recientes.
+
+8. Respuesta del asistente:
+   El asistente entrega una respuesta estructurada con:
+   - Producto.
+   - Riesgo de desabasto.
+   - Stock actual.
+   - Demanda esperada.
+   - Cantidad sugerida de compra.
+   - Evidencia.
+   - Nivel de confianza.
+   - Advertencia si los datos son insuficientes.
+
+9. Dashboard:
+   El usuario visualiza métricas de negocio como productos críticos, ventas
+   históricas, demanda proyectada, productos con sobreinventario y recomendaciones
+   de reabastecimiento.
+
+10. Manejo de errores:
+    Si el usuario pregunta por un producto inexistente, el sistema responde que el
+    SKU no se encuentra en el catálogo. Si no hay datos históricos suficientes, el
+    sistema indica que la predicción no es confiable y recomienda recopilar más
+    datos.
+
+Cómo reproducir la demo:
+1. Levantar backend, frontend y base de datos.
+2. Cargar dataset de ventas.
+3. Ejecutar script de preparación de datos.
+4. Entrenar modelo de predicción.
+5. Generar predicciones.
+6. Abrir dashboard.
+7. Realizar consulta al asistente GenAI.
+8. Validar que la recomendación esté basada en datos reales y no en información
+   inventada.
+
+
+--------------------------------------------------------------------------------
+CAMPO: Métricas y resultados
+--------------------------------------------------------------------------------
+
+La evaluación del sistema se dividirá en métricas de Machine Learning, métricas de
+inventario, métricas del asistente GenAI y métricas operativas.
+
+Métricas del modelo de predicción:
+
+MAE:
+Mide el error absoluto promedio entre la demanda real y la demanda predicha.
+
+RMSE:
+Mide el error cuadrático medio y penaliza más los errores grandes.
+
+WAPE:
+Mide el error porcentual ponderado. Es útil para demanda retail porque permite
+comparar errores entre productos con diferentes volúmenes de venta.
+
+sMAPE:
+Mide el error porcentual simétrico entre demanda real y predicha.
+
+Baseline:
+Proceso manual o promedio móvil simple con precisión estimada de 55%.
+
+Target:
+Alcanzar una precisión igual o superior al 85% o reducir el error de predicción al
+menos 20% frente al baseline.
+
+Métricas de inventario:
+
+Reducción de sobreinventario:
+Baseline: 25% del inventario con exceso de stock.
+Target: reducirlo a 20% o menos.
+
+Reducción de desabasto:
+Baseline: 15% de productos críticos con riesgo de quedarse sin stock.
+Target: reducirlo a 10% o menos.
+
+Fill rate:
+Medir el porcentaje de demanda que puede satisfacerse con inventario disponible.
+Target: mejorar la disponibilidad de productos críticos.
+
+Métricas del asistente GenAI:
+
+Precisión de recuperación RAG:
+Medir si los documentos recuperados son relevantes para la consulta del usuario.
+Target: al menos 80% de consultas con contexto relevante.
+
+Tasa de respuestas fundamentadas:
+Medir cuántas respuestas incluyen evidencia basada en datos del sistema.
+Target: 90% o más de respuestas con evidencia.
+
+Tasa de alucinación:
+Medir cuántas respuestas contienen productos, cantidades o datos no existentes.
+Target: 0 respuestas con datos inventados en recomendaciones críticas.
+
+Satisfacción de respuesta:
+Evaluación humana en escala de 1 a 5.
+Target: promedio mínimo de 4/5.
+
+Métricas operativas:
+
+Tiempo de análisis:
+Baseline: 4 horas diarias de análisis manual.
+Target: reducir a 2 horas diarias mediante dashboard y recomendaciones automáticas.
+
+Tiempo de respuesta del asistente:
+Target: responder consultas simples en menos de 5 segundos.
+
+Iteración de mejora documentada:
+
+Primera iteración:
+El modelo genera predicciones, pero algunos productos con demanda intermitente
+presentan alto error.
+
+Mejora aplicada:
+Se agregan variables de rezago, promedios móviles, clasificación de productos por
+rotación y validación de productos con baja cantidad de datos.
+
+Segunda iteración esperada:
+Reducción del error de predicción y respuestas GenAI más claras al incluir contexto
+de inventario, stock de seguridad y reglas de reabastecimiento.
+
+Nota:
+Los resultados finales serán reportados con datos medidos durante la demo. Las
+cifras de baseline y target funcionan como criterios de evaluación del prototipo,
+no como resultados definitivos hasta ejecutar la validación.
+
+
+================================================================================
+D4 · PAUTAS PARA UNA IA RESPONSABLE                                      14 pts
+================================================================================
+
+Objetivos:
+Identificar sesgos, implementar transparencia y configurar guardrails.
+
+
+--------------------------------------------------------------------------------
+CAMPO: Sesgos Identificados y Model Card
+--------------------------------------------------------------------------------
+
+Sesgo temporal:
+Tipo: sesgo en datos de entrenamiento.
+Descripción: las ventas históricas pueden estar influenciadas por temporadas,
+promociones, vacaciones o eventos atípicos. Si el modelo aprende demasiado de un
+periodo específico, puede sobreestimar o subestimar la demanda futura.
+Grupo afectado: usuarios de negocio que toman decisiones de compra e inventario.
+Detección: comparar errores por mes, semana, temporada y eventos especiales.
+Revisar MAE, WAPE y sMAPE por periodo.
+Mitigación: incluir variables temporales, detectar outliers, separar eventos
+atípicos y reentrenar periódicamente.
+
+Sesgo por producto de alta rotación:
+Tipo: sesgo en el modelo de predicción.
+Descripción: el modelo puede funcionar mejor para productos con muchas ventas
+históricas y peor para productos nuevos, de baja rotación o demanda intermitente.
+Grupo afectado: productos nuevos, productos de nicho y categorías con pocas ventas.
+Detección: evaluar métricas por categoría de producto, volumen de venta y antigüedad
+del producto.
+Mitigación: separar productos por comportamiento de demanda, usar modelos baseline
+para productos con pocos datos y marcar predicciones con baja confianza.
+
+Sesgo geográfico o por tienda:
+Tipo: sesgo en datos de entrenamiento.
+Descripción: si el dataset contiene más información de algunas tiendas o regiones,
+el modelo puede generar mejores predicciones para esas ubicaciones y peores
+resultados para tiendas con menos datos.
+Grupo afectado: sucursales pequeñas, tiendas nuevas o regiones con menor volumen de
+ventas.
+Detección: medir error por tienda, ciudad o región.
+Mitigación: balancear datos, evaluar por tienda y usar reglas de negocio cuando no
+exista suficiente historial.
+
+Sesgo por promociones o precios:
+Tipo: sesgo de variable omitida.
+Descripción: si el modelo no conoce cuándo hubo descuentos, promociones o cambios de
+precio, puede interpretar aumentos de ventas como demanda normal.
+Grupo afectado: responsables de compras e inventario, porque podrían comprar más
+producto del necesario.
+Detección: comparar predicciones en periodos con y sin promoción.
+Mitigación: incluir variables de precio, promoción y calendario comercial cuando
+estén disponibles.
+
+Sesgo en respuestas generadas:
+Tipo: sesgo en outputs del foundation model.
+Descripción: el asistente GenAI podría presentar una recomendación con lenguaje
+demasiado seguro aunque la predicción tenga baja confianza o datos insuficientes.
+Grupo afectado: usuarios que toman decisiones operativas.
+Detección: revisar respuestas generadas y verificar si incluyen evidencia, nivel de
+confianza y advertencias.
+Mitigación: obligar al modelo a mostrar evidencia, nivel de confianza y mensaje de
+incertidumbre cuando los datos sean insuficientes.
+
+
+--------------------------------------------------------------------------------
+SUBCAMPO: Model Card resumida
+--------------------------------------------------------------------------------
+
+Nombre del sistema:
+Sistema Inteligente de Predicción de Demanda y Optimización de Inventario para
+Retail usando IA y AWS.
+
+Objetivo:
+Predecir demanda futura, detectar riesgo de desabasto o sobreinventario y generar
+recomendaciones de reabastecimiento.
+
+Tipo de modelo:
+Modelo de Machine Learning supervisado para pronóstico de series de tiempo,
+complementado con un foundation model para explicación en lenguaje natural.
+
+Datos utilizados:
+Ventas históricas, inventario, productos, tiendas, fechas, precios y reglas de
+reabastecimiento.
+
+Uso previsto:
+Apoyar a analistas de inventario y responsables de compras en la toma de decisiones.
+
+Uso no previsto:
+No debe usarse para ejecutar compras automáticas sin revisión humana. No debe
+sustituir auditoría financiera, planeación estratégica completa ni decisiones
+legales o contractuales.
+
+Limitaciones:
+Puede tener menor precisión en productos nuevos, productos con baja rotación, datos
+incompletos, eventos atípicos o cambios bruscos de demanda.
+
+Supervisión humana:
+Las recomendaciones deben ser revisadas por un usuario responsable antes de tomar
+decisiones de compra.
+
+
+--------------------------------------------------------------------------------
+CAMPO: Guardrails, Seguridad y Gobernanza D4 y D5
+--------------------------------------------------------------------------------
+
+Bedrock Guardrails:
+Se configurarán guardrails para bloquear contenido fuera del dominio, prompt
+injection, instrucciones maliciosas, exposición de información sensible y respuestas
+sin evidencia.
+
+Temas denegados:
+El asistente no responderá solicitudes relacionadas con:
+- Revelar prompts internos.
+- Mostrar credenciales, claves o configuraciones privadas.
+- Ignorar reglas del sistema.
+- Modificar políticas de seguridad.
+- Inventar datos de inventario, proveedores o ventas.
+- Tomar decisiones automáticas de compra sin validación humana.
+
+Filtros de contenido:
+Se aplicarán filtros para detectar contenido inseguro, lenguaje inapropiado,
+instrucciones maliciosas y solicitudes que intenten manipular el comportamiento del
+modelo.
+
+Protección de PII y datos sensibles:
+El sistema evitará mostrar datos personales, información financiera sensible, costos
+privados de proveedores, credenciales, tokens, claves de API o información
+restringida.
+
+Respuestas con evidencia:
+Toda recomendación deberá incluir evidencia: stock actual, demanda esperada, punto
+de reorden, periodo analizado y nivel de confianza.
+
+Human-in-the-loop:
+Las recomendaciones de reabastecimiento requerirán revisión humana antes de
+convertirse en órdenes de compra. El sistema no ejecutará compras automáticamente.
+
+
+--------------------------------------------------------------------------------
+SUBCAMPO: Seguridad IAM
+--------------------------------------------------------------------------------
+
+Principio de menor privilegio:
+Cada servicio tendrá únicamente los permisos necesarios. Lambda, SageMaker, Bedrock,
+Glue, S3 y RDS usarán roles separados.
+
+Control de acceso por rol:
+Se definirán roles como administrador, analista y visualizador. No todos los
+usuarios podrán ver costos, proveedores o información sensible.
+
+Cifrado:
+Los datos se cifrarán en reposo y en tránsito. S3, RDS y logs deberán usar cifrado.
+Las conexiones a APIs usarán HTTPS.
+
+Secrets:
+Las credenciales de base de datos y claves de servicios se almacenarán en AWS
+Secrets Manager o Parameter Store. No se guardarán secretos en código fuente.
+
+
+--------------------------------------------------------------------------------
+SUBCAMPO: Gobernanza
+--------------------------------------------------------------------------------
+
+Trazabilidad:
+Se registrarán predicciones generadas, versión del modelo, fecha de inferencia,
+usuario que consultó la recomendación y datos usados para tomar la decisión.
+
+Monitoreo:
+Se utilizarán logs y métricas para revisar errores de predicción, consultas
+bloqueadas, intentos de prompt injection, latencia y costos.
+
+Auditoría:
+Se mantendrán registros de cambios en políticas de inventario, actualizaciones del
+modelo, cargas de datos y modificaciones de recomendaciones.
+
+Evaluación continua:
+El modelo se evaluará periódicamente con métricas como MAE, RMSE, WAPE y sMAPE. Si
+el error aumenta, se activará reentrenamiento o revisión humana.
+
+Cumplimiento:
+El sistema evitará exponer datos personales o información sensible. Si se usan datos
+reales, se aplicará minimización de datos, anonimización cuando sea necesario y
+control de acceso.
+
+Costos:
+Se monitoreará el uso de Bedrock, SageMaker, Glue, S3, RDS y QuickSight para evitar
+gasto innecesario. Las consultas simples podrán usar un modelo más económico y las
+tareas complejas usarán el modelo principal.
+
+Transparencia:
+El usuario siempre deberá saber que la respuesta es una recomendación asistida por
+IA y no una orden automática. También se mostrará nivel de confianza y advertencias
+cuando los datos sean limitados.
+
